@@ -13,7 +13,7 @@ from django.db.models import Count
 def dashboard(request):
     tests = Test.objects.all().annotate(question_count=Count("question"))
     context = {"tests": tests}
-    return render(request, 'dashboard/test.html', context=context)
+    return render(request, 'dashboard/index.html', context=context)
 
 
 @login_required(login_url="/auth/login/")
