@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static 'images/logo-small.png' %}">
+    <!-- Page Title  -->
+    <title>Test Results | DashLite Admin Template</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.css' %}?ver=3.2.3">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}?ver=3.2.3">
+
+    <style>
+        .previous-results {
+            display: none; /* Initially hide the previous results */
+        }
+        .previous-results.show {
+            display: block; /* Show the previous results when 'show' class is present */
+        }
+    </style>
+</head>
+
+<body class="nk-body ui-rounder has-sidebar">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <h1 class="text-center">{{ test.name }}</h1>
+                <p class="text-center">{{ test.description }}</p>
+                <hr>
+                <div class="nk-content nk-content my-container-x">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="components-preview wide-xl mx-auto">
+                                <div class="nk-block nk-block-lg">
+                                    <div class="card">
+                                        <div class="card-inner text-center">
+                                            <div class="result-container mx-auto">
+                                                <h1 class="result-header">Test Results</h1>
+                                                <p class="result-score">You scored {{ score }} out of {{ total }}</p>
+                                                <div class="d-flex justify-content-center">
+                                                    <form class="form-inline" action="{% url 'test_result' test_id=test_id %}" method="post">
+                                                        {% csrf_token %}
+                                                        <button type="submit" name="try_again" class="btn btn-lg btn-primary me-2">Try Again</button>
+                                                    </form>
+                                                    <form class="form-inline" action="{% url 'test_result' test_id=test_id %}" method="post">
+                                                        {% csrf_token %}
+                                                        <button type="submit" name="view_results" class="btn btn-lg btn-secondary">View Previous Results</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+
+                                <!-- Display Previous Results -->
+                                {% if show_previous_results %}
+                                <div class="nk-block nk-block-lg mt-1 pt-4">
+                                    <h3 class="text-center">Previous Results</h3>
+                                    {% if previous_results %}
+                                    <div class="card">
+                                        <div class="card-inner">
+                                            <ul class="list-group">
+                                                {% for result in previous_results %}
+                                                <li class="list-group-item">
+                                                    <strong>User:</strong> {{ user_name }}<br>
+                                                    <strong>Date:</strong> {{ result.date|date:"d M Y H:i" }}<br>
+                                                    <strong>Score:</strong> {{ result.score }} / {{ result.total }}<br>
+                                                    <strong>Percentage:</strong> {{ result.percentage }}%
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <p class="text-center">No previous results available.</p>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                <!-- End Previous Results -->
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end wrap @e -->
+            </div>
+            <!-- end main @e -->
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const previousResultsSection = document.querySelector('.previous-results');
+            const toggleButton = document.querySelector('.toggle-previous-results');
+
+            if (toggleButton && previousResultsSection) {
+                toggleButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    previousResultsSection.classList.toggle('show'); // Toggle the 'show' class
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
+

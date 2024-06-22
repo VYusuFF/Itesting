@@ -1,0 +1,318 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static '/images/logo-small.png' %}">
+    <!-- Page Title  -->
+    <title>Form Layouts - General | DashLite Admin Template</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static '/assets/css/dashlite.css' %}?ver=3.2.3">
+    <link id="skin-default" rel="stylesheet" href="{% static '/assets/css/theme.css' %}?ver=3.2.3">
+</head>
+<style>
+    .input-group-append {
+        background-color: white; /* or the background color of your form */
+        border: none;
+    }
+    .input-group-text {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        background-color: white; /* or the background color of your form */
+        border: none;
+    }
+    .custom-control.custom-checkbox {
+        margin-bottom: 0;
+    }
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<body class="nk-body ui-rounder has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <form action="{% url 'test_add' %}" method="post"> {% csrf_token %}
+                    <input type="hidden" name="test_id" value="{{ test_id }}">
+                    <div class="nk-content nk-content-fluid">
+                        <div class="container-xl wide-xl">
+                            <div class="nk-content-body">
+                                <div class="components-preview wide-xl mx-auto">
+                                    <div class="nk-block-head nk-block-head-lg wide-sm">
+                                        <div class="nk-block-head-content">
+                                            <h2 class="nk-block-title fw-normal">Create Test</h2>
+                                            <div class="nk-block-des">
+                                                <p class="lead">Follow the steps below to create a new test. Ensure you provide all the necessary details to set up the test correctly.</p>      
+                                            </div>                                            
+                                        </div>   
+                                                                        
+                                    </div><!-- .nk-block -->
+                                    {% if messages %}
+                                                    <div id="message-container">
+                                                        {% for message in messages %}
+                                                            <div class="alert alert-danger alert-dismissible fade show mb-5" role="alert">
+                                                                {{ message }}
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                {% endif %}
+                                    <div class="nk-block nk-block-lg">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h4 class="title nk-block-title">Setup Test</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">Creation Test</h5>
+                                                </div>
+                                                    <div class="row g-4">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="full-name-1">Name</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="text" class="form-control" id="full-name-1" name="test_name" value="{{ test_name }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="email-address-1">Description</label>
+                                                                <div class="form-control-wrap">
+                                                                    <input type="text" class="form-control" id="email-address-1" name="test_description" value="{{ test_description }}">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                        </div>
+                                                       
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- .nk-block -->
+                                    
+                                    <div class="nk-block nk-block-lg">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h4 class="title nk-block-title">Setup Questions</h4>
+                                            </div>
+                                        </div>
+                                        <div class="row g-gs">
+                                            <div class="col-lg-6">
+                                                <div class="card h-100">
+                                                    <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <h5 class="card-title">Adding Question</h5>
+                                                        </div>
+                                                        <form action="#">
+                                                            <div class="form-group">
+                                                                <label class="form-label" for="cf-default-textarea">Question</label>
+                                                                <div class="form-control-wrap">
+                                                                    <textarea class="form-control form-control-sm" id="cf-default-textarea" name="question" placeholder="Write your question"></textarea>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mt-3 mb-3">
+                                                                <div><h1 class="font-fascinate text-8xl font-bold uppercase"><br></h1></div>
+                                                            </div>
+                                                            <div class="form-group d-flex justify-content-between">
+                                                              
+                                                        
+                                                                <button type="submit" class="btn btn-lg btn-primary w-45" name="action" value="save_add_another">Save And Add Another</button>
+                                                            </div>
+                                                    
+                                                        </form>                                     
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-lg-6">
+                                                <div class="card h-100">
+                                                    <div class="card-inner">
+                                                        <div class="card-head">
+                                                            <h5 class="card-title">Choices</h5>
+                                                        </div>
+                                              
+                                                            <div class="form-group mb-3">
+                                                                <label class="form-label" for="cf-option-a">Option A</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" id="cf-option-a" name="choice_text_a">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="is-correct-a" name="is_correct_a">
+                                                                                <label class="custom-control-label" for="is-correct-a"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group mb-3">
+                                                                <label class="form-label" for="cf-option-b">Option B</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" id="cf-option-b" name="choice_text_b">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="is-correct-b" name="is_correct_b">
+                                                                                <label class="custom-control-label" for="is-correct-b"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group mb-3">
+                                                                <label class="form-label" for="cf-option-c">Option C</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" id="cf-option-c" name="choice_text_c">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="is-correct-c" name="is_correct_c">
+                                                                                <label class="custom-control-label" for="is-correct-c"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group mb-3">
+                                                                <label class="form-label" for="cf-option-d">Option D</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control" id="cf-option-d" name="choice_text_d">
+                                                                    <div class="input-group-append">
+                                                                        <div class="input-group-text">
+                                                                            <div class="custom-control custom-checkbox">
+                                                                                <input type="checkbox" class="custom-control-input" id="is-correct-d" name="is_correct_d">
+                                                                                <label class="custom-control-label" for="is-correct-d"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                  
+                                                    </div>
+                                                </div>
+                                            </div>                              
+                                            <div class="form-group d-flex justify-content-center">
+                                                <button type="submit" class="btn btn-lg btn-primary w-50" name="action" value="save_info">Save Information</button>
+                                            </div>
+                                        </div>                         
+                                    </div><!-- .nk-block -->  
+                                                 
+                                    {% if question.question %} 
+                                        {% if question_choices %}
+                                        <div class="nk-block nk-block-lg">
+                                            <div class="nk-block-head">
+                                                <div class="nk-block-head-content">
+                                                    <h4 class="title nk-block-title">Created Questions</h4>
+                                                </div>
+                                            </div>
+                                            <div class="row g-gs">
+                                                {% for question, choices in question_choices %}
+                                                {% if question.question %} <!-- Check if the question text is not empty -->
+                                                <div class="col-lg-6">
+                                                    <div class="card h-100">
+                                                        <div class="card-inner">
+                                                            <div class="card-head">
+                                                                <h5 class="card-title">{{ question.question }}</h5>
+                                                            </div>
+                                                            <div class="option-text">
+                                                                <p>{{ question.option_text }}</p>
+                                                            </div>
+                                                            <ul class="list-group list-group-flush">
+                                                                {% for choice in choices %}
+                                                                <br>
+                                                                <span class="option">Option {{ choice.option }}</span><br>
+                                                                <li class="list-group-item">
+                                                                    <span class="choice">{{ choice.choice }}</span>
+                                                                    {% if choice.is_correct %}
+                                                                    <span class="text-primary" style="display: block; text-align: right;">Correct</span>
+                                                                    {% endif %}
+                                                                </li>
+                                                                {% empty %}
+                                                                <li class="list-group-item">No choices available for this question.</li>
+                                                                {% endfor %}
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        {% endif %}
+                                    {% endif %}
+                                    
+                                    
+                                    
+                                    
+                                    
+
+                                </div><!-- .components-preview -->
+                            </div>
+                            
+
+                            
+                            
+                        
+                        </div>
+                    </div>
+                </form>
+                <!-- content @e -->
+                
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="{% static '/assets/js/bundle.js' %}?ver=3.2.3"></script>
+    <script src="{% static '/assets/js/scripts.js' %}?ver=3.2.3"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var alertElements = document.querySelectorAll('.alert-dismissible');
+
+            alertElements.forEach(function(alertElement) {
+                setTimeout(function() {
+                    alertElement.remove();
+                }, 5000); // Adjust the delay here (5000 milliseconds = 5 seconds)
+            });
+        });
+    </script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Select all checkboxes that have the class 'custom-control-input'
+            const checkboxes = document.querySelectorAll('.custom-control-input');
+            
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function() {
+                    // Uncheck all checkboxes except the one that was clicked
+                    checkboxes.forEach(function(cb) {
+                        if (cb !== checkbox) {
+                            cb.checked = false;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+        
+</body>
+
+</html>

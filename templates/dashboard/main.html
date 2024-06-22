@@ -1,0 +1,228 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static '/images/logo-small.png' %}">
+    <!-- Page Title  -->
+    <title>Profile - AI Copywriter | DashLite Admin Template</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static '/assets/css/dashlite.css' %}?ver=3.2.3">
+    <link id="skin-default" rel="stylesheet" href="{% static '/assets/css/theme.css' %}?ver=3.2.3">
+</head>
+<style>
+    .input-group-text {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+    }
+    .custom-control.custom-checkbox {
+        margin-bottom: 0;
+    }
+
+  
+</style>
+<body class="nk-body ui-rounder has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- main header @s -->
+                <div class="nk-header is-light nk-header-fixed is-light">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-header-wrap">
+                            <div class="d-flex">
+                            <img class="logo-dark logo-img" src="{% static '/images/logo-dark.png' %}" srcset="{% static '/images/logo-dark2x.png' %} 2x" alt="logo-dark">
+                            </div>
+                            <div class="nk-header-tools">
+                                <ul class="nk-quick-nav">
+                                    <li class="dropdown user-dropdown">
+                                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                            <div class="user-toggle">
+                                                <div class="user-avatar sm">
+                                                    <em class="icon ni ni-user-alt"></em>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end">
+                                            <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                                                <div class="user-card">
+                                                    <div class="user-avatar">
+                                                        <span>
+                                                        {% if user.first_name and user.last_name %}
+                                                            {{ user.first_name.0|upper }}{{ user.last_name.0|upper }}
+                                                        {% elif user.first_name %}
+                                                            {{ user.first_name.0|upper }}
+                                                        {% elif user.username %}
+                                                            {{ user.username.0|upper }}
+                                                        {% else %}
+                                                            {{ user.email.0|upper }}
+                                                        {% endif %}
+                                                        </span>
+                                                    </div>
+                                                    <div class="user-info">
+                                                        <span class="lead-text">{{ user.username }}</span>
+                                                        <span class="sub-text">{{ user.email }}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-inner">
+                                                <ul class="link-list">
+                                                    <li><a href="{% url 'profile' %}"><em class="icon ni ni-user-alt"></em><span>View Profile</span></a></li>
+                                                    <li><a href="{% url 'dashboard' %}"><em class="icon ni ni-clock"></em><span>View Tests</span></a></li>
+                                                    <li><a href="#" class="dark-switch"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="dropdown-inner">
+                                                <ul class="link-list">
+                                                    <li><a href="{% url 'logout' %}"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- .nk-header-tools -->
+                        </div><!-- .nk-header-wrap -->
+                    </div><!-- .container-fliud -->
+                </div>
+                <!-- main header @e -->
+                <!-- content @s -->
+                {% block content %}
+                {% endblock %}
+                <!-- content @e -->
+                <!-- footer @s -->
+                <div class="nk-footer">
+                    <div class="container-xl wide-xl">
+                        <!-- <div class="nk-footer-copyright"> &copy; 2023 DashLite. Template by <a href="https://softnio.com" target="_blank">Softnio</a> -->
+                        <div class="nk-footer-wrap d-flex justify-content-end">     
+                            <ul class="nav nav-sm">
+                                <li class="nav-item">
+                                    <a class="link link-primary fw-normal py-2 px-3" href="{% url 'terms' %}">Terms & Condition</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="link link-primary fw-normal py-2 px-3" href="{% url 'terms' %}">Privacy Policy</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="link link-primary fw-normal py-2 px-3" href="{% url 'faqs' %}">Help</a>
+                                </li>
+                            </ul>
+                        </div>                        
+                    </div>
+                </div>
+                
+                <!-- footer @e -->
+            </div>
+            <!-- wrap @e -->
+        </div>
+        <!-- main @e -->
+    </div>
+    <!-- app-root @e -->
+    <!-- JavaScript -->
+    <script src="{% static '/assets/js/bundle.js' %}?ver=3.2.3"></script>
+    <script src="{% static '/assets/js/scripts.js' %}?ver=3.2.3"></script>
+
+    <script>
+        function showConfirmationCard(testId, testName) {
+            document.getElementById('hiddenTestId').value = testId;
+            document.getElementById('testName').innerText = testName;
+            document.getElementById('confirmationCard').style.display = 'block';
+        }
+
+        function hideConfirmationCard() {
+            document.getElementById('confirmationCard').style.display = 'none';
+        }
+
+        // Automatically submit the form to the delete view when the form is submitted
+        document.getElementById('deleteForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+            var testId = document.getElementById('hiddenTestId').value;
+            var form = event.target;
+            var actionUrl = "{% url 'test_delete' 0 %}".replace('/0/', '/' + testId + '/');
+            form.action = actionUrl;
+            form.submit();
+        });
+    </script>
+
+    <script>
+    $(document).ready(function() {
+        // Ensure modal fields reflect current user information upon modal opening
+        $('#profile-edit').on('show.bs.modal', function() {
+            // Update input values based on current user data
+            $('#full-name').val($('#full-name').data('initial-value'));
+            $('#display-name').val($('#display-name').data('initial-value'));
+            $('#email').val($('#email').data('initial-value'));
+            // Clear passcode field for security reasons
+            $('#passcode').val('');
+        });
+    
+        // Reset modal fields when modal is hidden
+        $('#profile-edit').on('hide.bs.modal', function() {
+            $('#full-name').val($('#full-name').data('initial-value'));
+            $('#display-name').val($('#display-name').data('initial-value'));
+            $('#email').val($('#email').data('initial-value'));
+            // Clear passcode field for security reasons
+            $('#passcode').val('');
+        });
+    
+        // Initialize Bootstrap tooltips
+        $('[data-bs-toggle="tooltip"]').tooltip();
+    });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var alertElements = document.querySelectorAll('.alert-dismissible');
+
+            alertElements.forEach(function(alertElement) {
+                setTimeout(function() {
+                    alertElement.remove();
+                }, 5000); // Adjust the delay here (5000 milliseconds = 5 seconds)
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const darkSwitch = document.querySelector('.dark-switch');
+
+            // Function to set dark mode
+            function setDarkMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                } else {
+                    document.body.classList.remove('dark-mode');
+                }
+                // Save to localStorage
+                localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            }
+
+            // Check localStorage for dark mode preference
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'enabled') {
+                setDarkMode(true); // Apply dark mode if previously saved
+            } else {
+                setDarkMode(false); // Default to light mode if not saved
+            }
+
+            // Toggle dark mode on click
+            darkSwitch.addEventListener('click', function() {
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                setDarkMode(!isDarkMode);
+            });
+        });
+
+    </script>
+
+
+    
+</body>
+
+</html>

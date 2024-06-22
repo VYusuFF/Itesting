@@ -1,0 +1,138 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="nk-content nk-content-fluid">
+    <div class="container-xl wide-xl">
+        <div class="nk-content-body">
+            <div class="nk-block-head nk-block-head-sm">
+                <div class="nk-block-between">
+                    <div class="nk-block-head-content">
+                        <h3 class="nk-block-title page-title">Personal Information</h3>
+                        <div class="nk-block-des">
+                            <p>Basic info, like your name and address.</p>                                                        
+                        </div>
+                    </div>
+                </div>
+                {% if messages %}
+                    <div id="message-container">
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show mt-3" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div><!-- .nk-block-head -->
+            
+            <div class="nk-block">
+                <div class="card">
+                    <ul class="nav nav-tabs nav-tabs-s1 px-4"> 
+                    </ul>
+                    <div class="card-inner">
+                        <div class="tab-content mt-0">
+                            <div class="tab-pane fade show active" id="profile-tab-pane">
+                                <div class="nk-data data-list">       
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">Full Name</span>
+                                            <span class="data-value">{{ user.get_full_name }}</span>
+                                        </div>
+                                        <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                    </div><!-- data-item -->
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">User Name</span>
+                                            <span class="data-value">{{ user.username }}</span>
+                                        </div>
+                                        <div class="data-col data-col-end"><span class="data-more"><em class="icon ni ni-forward-ios"></em></span></div>
+                                    </div><!-- data-item -->
+                                    <div class="data-item">
+                                        <div class="data-col">
+                                            <span class="data-label">Email</span>
+                                            <span class="data-value">{{ user.email }}</span>
+                                        </div>
+                                        <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div>
+                                    </div><!-- data-item -->
+                                    <div class="data-item" data-bs-toggle="modal" data-bs-target="#profile-edit">
+                                        <div class="data-col">
+                                            <span class="data-label">Passcode</span>
+                                            <span class="data-value text-soft">********</span>
+                                        </div>
+                                        <div class="data-col data-col-end"><span class="data-more disable"><em class="icon ni ni-lock-alt"></em></span></div>
+                                    </div><!-- data-item -->
+                                </div><!-- data-list -->
+                            </div><!-- .tab-pane -->
+                        </div><!-- .tab-content -->
+                    </div>
+                </div>
+            </div><!-- .nk-block -->
+        </div>
+    </div>
+</div>
+
+<!-- @@ Profile Edit Modal @e -->
+<div class="modal fade" role="dialog" id="profile-edit">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <a href="#" class="close" data-bs-dismiss="modal"><em class="icon ni ni-cross-sm"></em></a>
+            <div class="modal-body modal-body-lg">
+                <h5 class="title">Update Profile</h5>
+                <form id="profile-update-form" method="post" action="{% url 'profile' %}">
+                    {% csrf_token %}
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="personal">
+                            <div class="row gy-4">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="full-name">Full Name</label>
+                                        <input type="text" class="form-control form-control-lg" id="full-name" name="full_name" value="{{ user.get_full_name }}" data-initial-value="{{ user.get_full_name }}" placeholder="Enter Full name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="display-name">Display Name</label>
+                                        <input type="text" class="form-control form-control-lg" id="display-name" name="username" value="{{ user.username }}" data-initial-value="{{ user.username }}" placeholder="Enter Display name">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="email">Email
+                                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="You can't change this field"><em class="icon ni ni-info"></em></a>
+                                        </label>
+                                        <input type="email" class="form-control form-control-lg" id="email" name="email" placeholder="{{ user.email }}" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label class="form-label" for="passcode">Passcode
+                                            <a data-bs-toggle="tooltip" data-bs-placement="top" title="You can't change this field"><em class="icon ni ni-info"></em></a>
+                                        </label>
+                                        <input type="text" class="form-control form-control-lg" id="passcode" name="password" placeholder="********" readonly>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <ul class="align-center flex-wrap flex-sm-nowrap gx-4 gy-2">
+                                        <li>
+                                            <button type="submit" class="btn btn-lg btn-primary">Update Profile</button>
+                                        </li>
+                                        <li>
+                                            <a href="#" data-bs-dismiss="modal" class="link link-light">Cancel</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- .tab-pane -->
+                    </div><!-- .tab-content -->
+                </form>
+            </div><!-- .modal-body -->
+        </div><!-- .modal-content -->
+    </div><!-- .modal-dialog -->
+</div><!-- .modal -->
+
+ 
+
+
+
+{% endblock %}
