@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static 'images/logo-small.png' %}">
+    <!-- Page Title  -->
+    <title>Test Solver | DashLite Admin Template</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static 'assets/css/dashlite.css' %}?ver=3.2.3">
+    <link id="skin-default" rel="stylesheet" href="{% static 'assets/css/theme.css' %}?ver=3.2.3">
+</head>
+<style>
+    .input-group-append {
+        background-color: white; /* or the background color of your form */
+        border: none;
+    }
+    .input-group-text {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        background-color: white; /* or the background color of your form */
+        border: none;
+    }
+    .custom-control.custom-checkbox {
+        margin-bottom: 10px; /* Add margin between options */
+    }
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .question-container {
+        margin-bottom: 40px;
+    }
+    .question-text {
+        margin-bottom: 20px;
+        font-weight: bold;
+        font-size: 1.5rem; /* Larger text for question */
+    }
+    .options-container {
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column; /* Display options in a column layout */
+    }
+    .custom-control-label {
+        font-size: 1.25rem; /* Slightly smaller text for options */
+        cursor: pointer;
+    }
+    .option-letter {
+        font-weight: bold;
+        color: #333; /* Darker color for option letter */
+    }
+    .custom-control-input:checked ~ .custom-control-label {
+        color: #333; /* Darker color for selected option text */
+    }
+    .custom-control-input:not(:checked) ~ .custom-control-label {
+        color: #333; /* Same color for unselected option text */
+    }
+</style>
+
+
+
+
+
+<body class="nk-body ui-rounder has-sidebar">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main">
+            <!-- wrap @s -->
+            <div class="nk-wrap">
+                <h1 class="text-center">{{ test.name }}</h1>
+                <p class="text-center">{{ test.description }}</p>
+                <hr>
+                <div class="nk-content nk-content-fluid">
+                    <div class="container-xl wide-xl">
+                        <div class="nk-content-body">
+                            <div class="components-preview wide-xl mx-auto">
+                                <div class="nk-block nk-block-lg">
+                                    <div class="card">
+                                        <div class="card-inner">
+                                            <form id="testForm" method="post">
+                                                {% csrf_token %}
+                                                {% for question in questions %}
+                                                <div class="question-container">
+                                                    <div class="question-text">
+                                                        Question {{ forloop.counter }}.<br>{{ question.question }}
+                                                    </div>
+                                                    <div class="options-container">
+                                                        {% for choice in question.choice_set.all %}
+                                                        <div class="custom-control custom-checkbox">
+                                                            <input type="checkbox" class="custom-control-input" id="question{{ forloop.parentloop.counter }}option{{ forloop.counter }}" name="question{{ question.id }}" value="{{ choice.id }}">
+                                                            <label class="custom-control-label" for="question{{ forloop.parentloop.counter }}option{{ forloop.counter }}">
+                                                                <span class="option-letter">{{ choice.option|upper }}</span> {{ choice.choice }}
+                                                            </label>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    
+                                                    
+                                                </div>
+                                                {% endfor %}
+                                                <div class="form-group d-flex justify-content-center">
+                                                    <button type="submit" class="btn btn-lg btn-primary w-50" name="action" value="save_info">Save Information</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end wrap @e -->
+            </div>
+            <!-- end main @e -->
+        </div>
+    </div>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

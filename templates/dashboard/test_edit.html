@@ -1,0 +1,203 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href="../../../">
+    <meta charset="utf-8">
+    <meta name="author" content="Softnio">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="A powerful and conceptual apps base dashboard template that especially build for developers and programmers.">
+    <!-- Fav Icon  -->
+    <link rel="shortcut icon" href="{% static '/images/logo-small.png' %}">
+    <!-- Page Title  -->
+    <title>Form Layouts - General | DashLite Admin Template</title>
+    <!-- StyleSheets  -->
+    <link rel="stylesheet" href="{% static '/assets/css/dashlite.css' %}?ver=3.2.3">
+    <link id="skin-default" rel="stylesheet" href="{% static '/assets/css/theme.css' %}?ver=3.2.3">
+</head>
+<style>
+    .input-group-append {
+        background-color: white; /* or the background color of your form */
+        border: none;
+    }
+    .input-group-text {
+        display: flex;
+        align-items: center;
+        padding-left: 10px;
+        background-color: white; /* or the background color of your form */
+        border: none;
+    }
+    .custom-control.custom-checkbox {
+        margin-bottom: 0;
+    }
+    .btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<body class="nk-body ui-rounder has-sidebar ">
+    <div class="nk-app-root">
+        <!-- main @s -->
+        <div class="nk-main ">
+            <!-- wrap @s -->
+            <div class="nk-wrap ">
+                <!-- content @s -->
+                <form action="{% url 'test_edit' test.id %}" method="post"> {% csrf_token %}
+                    <div class="nk-content nk-content-fluid">
+                        <div class="container-xl wide-xl">
+                            <div class="nk-content-body">    
+                                <div class="components-preview wide-xl mx-auto">
+                                    <div class="nk-block-head nk-block-head-lg wide-sm">
+                                        <div class="nk-block-head-content">
+                                            <h2 class="nk-block-title fw-normal">Edit Test</h2>
+                                        </div>
+                                    </div>
+                                    <div class="nk-block nk-block-lg">
+                                        <div class="nk-block-head">
+                                            <div class="nk-block-head-content">
+                                                <h4 class="title nk-block-title">Test Information</h4>
+                                            </div>
+                                        </div>
+                                        <div class="card">
+                                            <div class="card-inner">
+                                                <div class="card-head">
+                                                    <h5 class="card-title">Test Details</h5>
+                                                </div>
+                                                <div class="row g-4">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="full-name-1">Name</label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" class="form-control" id="full-name-1" name="test_name" value="{{ test.name }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="form-label" for="email-address-1">Description</label>
+                                                            <div class="form-control-wrap">
+                                                                <input type="text" class="form-control" id="email-address-1" name="test_description" value="{{ test.description }}">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% for question, choices in question_choices %}
+                                    <div class="row g-gs mt-1">
+                                        <div class="col-lg-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">Adding Question</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cf-default-textarea">Question</label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea class="form-control form-control-sm" id="question_{{ question.id }}" name="question_{{ question.id }}" value="{{ question.question }}">{{ question.question }}</textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3 mb-3">
+                                                        <div><h1 class="font-fascinate text-8xl font-bold uppercase"></h1></div>
+                                                    </div>                                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">Choices</h5>
+                                                    </div>
+                                                    {% for choice in choices %}
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="choice_id_{{ question.id }}_{{ choice.option|lower }}" value="{{ choice.id }}">
+                                                        <label for="choice_text_{{ question.id }}_{{ choice.option|lower }}">Option {{ choice.option|upper }}</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="choice_text_{{ question.id }}_{{ choice.option|lower }}" name="choice_text_{{ question.id }}_{{ choice.option|lower }}" value="{{ choice.choice }}">
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="is_correct_{{ question.id }}_{{ choice.option|lower }}" name="is_correct_{{ question.id }}_{{ choice.option|lower }}" {% if choice.is_correct %}checked{% endif %}>
+                                                                        <label class="custom-control-label" for="is_correct_{{ question.id }}_{{ choice.option|lower }}"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>                              
+                                    </div> 
+                                    {% empty %}
+                                    <div class="row g-gs mt-1">
+                                        <div class="col-lg-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">Adding Question</h5>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="form-label" for="cf-default-textarea">Question</label>
+                                                        <div class="form-control-wrap">
+                                                            <textarea class="form-control form-control-sm" id="question_new" name="question_new" placeholder="Enter your question here"></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mt-3 mb-3">
+                                                        <div><h1 class="font-fascinate text-8xl font-bold uppercase"></h1></div>
+                                                    </div>                                                            
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="card h-100">
+                                                <div class="card-inner">
+                                                    <div class="card-head">
+                                                        <h5 class="card-title">Choices</h5>
+                                                    </div>
+                                                    {% for option in 'abcd' %}
+                                                    <div class="form-group">
+                                                        <input type="hidden" name="choice_id_new_{{ option }}">
+                                                        <label for="choice_text_new_{{ option }}">Option {{ option|upper }}</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control" id="choice_text_new_{{ option }}" name="choice_text_new_{{ option }}" placeholder="Enter option {{ option|upper }}">
+                                                            <div class="input-group-append">
+                                                                <div class="input-group-text">
+                                                                    <div class="custom-control custom-checkbox">
+                                                                        <input type="checkbox" class="custom-control-input" id="is_correct_new_{{ option }}" name="is_correct_new_{{ option }}">
+                                                                        <label class="custom-control-label" for="is_correct_new_{{ option }}"></label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>                              
+                                    </div>
+                                    {% endfor %}
+                                    
+                                    
+                                    
+                                    <div class="form-group d-flex justify-content-center mt-5">
+                                        <button type="submit" class="btn btn-lg btn-primary w-50" name="action" value="save_info">Save Information</button>
+                                    </div>
+                                </div><!-- .components-preview -->
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- JavaScript -->
+    <script src="{% static '/assets/js/bundle.js' %}?ver=3.2.3"></script>
+    <script src="{% static '/assets/js/scripts.js' %}?ver=3.2.3"></script>
+</body>
+
+</html>

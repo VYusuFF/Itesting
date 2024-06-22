@@ -1,0 +1,3 @@
+[submodule "Itesting"]
+	path = Itesting
+	url = git@github.com:VYusuFF/Itesting.git

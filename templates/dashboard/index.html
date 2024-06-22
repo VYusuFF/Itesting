@@ -1,0 +1,173 @@
+{% extends 'dashboard/main.html' %}
+{% load static %}
+
+{% block content %}
+<div class="nk-content nk-content-fluid">
+    <div class="container-xl wide-xl">
+        <div class="nk-content-body">
+            <div class="nk-block-head nk-block-head-sm">
+                <div class="nk-block-between g-3">
+                    <div class="nk-block-head-content">
+                        <h3 class="nk-block-title page-title">Tests</h3>
+                        <div class="nk-block-des text-soft">
+                            <p>List of all tests that have been generated.</p>
+                        </div>
+                    </div>
+                    <div class="nk-block-head-content">
+                        <a href="{% url 'dashboard:test_add' %}" class="btn btn-primary d-none d-sm-inline-flex"><em class="icon ni ni-plus"></em><span>Create New</span></a>
+                        <a href="{% url 'dashboard:test_add' %}" class="btn btn-icon btn-primary d-inline-flex d-sm-none"><em class="icon ni ni-plus"></em></a>
+                    </div>
+                </div>
+                {% if messages %}
+                    <div id="message-container">
+                        {% for message in messages %}
+                            <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div><!-- .nk-block-head -->
+            <div class="nk-block">
+                <div class="card card-stretch">
+                    <div class="card-inner-group">
+                        <div class="card-inner">
+                            <div class="card-title-group">
+                                <div class="card-title">
+                                    <h5 class="title">Tests List</h5>
+                                </div>
+                         <!-- ADD TOOLS HERE VERSION2 -->
+                            </div><!-- .card-title-group -->
+                        </div><!-- .card-inner -->
+                    
+                        <div class="card-inner p-0">
+                            {% if tests %}
+                            <div class="nk-tb-list nk-tb-tnx">
+                                <div class="nk-tb-item nk-tb-head">
+                                    <div class="nk-tb-col">
+                                        <h6 class="overline-title">Name</h6>
+                                    </div>
+                                    <div class="nk-tb-col">
+                                        <h6 class="overline-title">Questions</h6>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-sm">
+                                        <h6 class="overline-title">Created Time</h6>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        <h6 class="overline-title">Last Modified</h6>
+                                    </div>
+                                    <div class="nk-tb-col"></div>
+                                </div>
+                                {% for test in tests %}
+                                <div class="nk-tb-item">
+                                    <div class="nk-tb-col">
+                                        <div class="badge badge-dim bg-dark rounded-pill">{{ test.name }}</div>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-sm">
+                                        <div class="caption-text">{{ test.question_count }}</div>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        <div class="sub-text d-inline-flex flex-wrap gx-2">
+                                            <div>{{ test.created_at }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-md">
+                                        <div class="sub-text d-inline-flex flex-wrap gx-2">
+                                            <div>{{ test.updated_at }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="nk-tb-col tb-col-end">
+                                        <div class="dropdown">
+                                            <button class="btn btn-sm btn-icon btn-trigger me-n1" type="button" data-bs-toggle="dropdown">
+                                                <em class="icon ni ni-more-h"></em>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <div class="dropdown-content">
+                                                    <ul class="link-list-opt no-bdr">
+                                                        <li>
+                                                            <a href="{% url 'test_solve' test.id %}"><em class="icon ni ni-eye"></em><span>View Document</span></a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="{% url 'test_edit' test.id %}"><em class="icon ni ni-edit"></em><span>Edit</span></a>
+                                                        </li>
+                                                        <button type="button" class="btn btn-trigger-modal" data-toggle="modal" data-target="#delete_{{test.id}}">
+                                                            <em class="icon ni ni-trash"></em><span>Move to Trash</span>
+                                                        </button>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        
+                                            <!-- Modal -->
+                                        
+                                            <div class="modal fade" id="delete_{{test.id}}" tabindex="-1" role="dialog" aria-labelledby="delete_{{test.id}}Label" aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title" id="delete_{{test.id}}Label">Confirm Deletion</h4>
+                                                            <!-- Removed the close (x) button -->
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h5 class="modal-test-name" style="font-size: 20px; font-weight: normal;">Are you sure you want to delete the {{ test.name }} test?</h5>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            <form id="deleteTestForm" method="post" action="{% url 'test_delete' test.id %}">
+                                                                {% csrf_token %}
+                                                                <input type="hidden" name="test_id" value="{{ test.id }}">
+                                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+
+
+                                        </div>
+                                    </div>
+                                </div><!-- .nk-tb-item -->
+                                {% endfor %}
+                            </div><!-- .nk-tb-list -->
+                        {% else %}
+                                <div class="card-inner">
+                                    <div class="text-center py-4">
+                                        <p style="font-size: 24px;">No tests have been created yet.</p>
+                                    </div>
+                                </div>
+                        {% endif %}
+                        </div><!-- .card-inner -->
+                        
+                    </div><!-- .card-inner-group -->
+                </div><!-- .card -->
+            </div><!-- .nk-block -->
+           
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Handle click event of delete button
+        $(".btn-delete-test").click(function() {
+            var testId = $(this).data("test-id"); // Get the test_id from data attribute
+            var modal = $(this).closest(".modal"); // Get the parent modal
+            var form = modal.find("form"); // Get the form inside the modal
+            var action = form.attr("action").replace(/test_id/g, testId); // Replace 'test_id' placeholder with actual test_id
+            form.attr("action", action); // Update form action
+            form.find("#deleteTestId").val(testId); // Update value of the hidden input field
+            form.submit(); // Submit the form
+        });
+    });
+</script>
+
+
+
+
+
+
+
+{% endblock %}
